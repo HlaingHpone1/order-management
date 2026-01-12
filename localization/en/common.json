@@ -1,0 +1,9 @@
+{
+  "noResults": "No Results",
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "rows_per_page": "Rows per page"
+  }
+}
