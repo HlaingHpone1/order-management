@@ -1,1 +1,22 @@
-{}
+{
+  "label": {
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password"
+  },
+  "placeholder": {
+    "name": "Your name",
+    "email": "your.email@example.com",
+    "password": "Enter your password",
+    "confirmPassword": "Confirm your password"
+  },
+  "validation": {
+    "email": "Email is Required",
+    "password": "Password Is Required",
+    "name_min": "Name must be at least 2 characters",
+    "email_invalid": "Invalid email address",
+    "password_min": "Password must be at least 6 characters",
+    "password_match": "Passwords don't match"
+  }
+}

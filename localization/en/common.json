@@ -5,5 +5,60 @@
     "next": "Next",
     "page": "Page",
     "rows_per_page": "Rows per page"
+  },
+  "navigation": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "profile": "Profile",
+    "orders": "Order History",
+    "logout": "Logout",
+    "account": "My Account"
+  },
+  "cta": {
+    "shopNow": "Shop Now",
+    "shopCollection": "Shop Collection",
+    "learnMore": "Learn More",
+    "viewAllProducts": "View All Products",
+    "exploreProducts": "Explore Products"
+  },
+  "footer": {
+    "brandName": "FragranceHub",
+    "brandDescription": "Your destination for luxury fragrances and premium perfumes.",
+    "shop": "Shop",
+    "allProducts": "All Products",
+    "mensFragrances": "Men's Fragrances",
+    "womensFragrances": "Women's Fragrances",
+    "company": "Company",
+    "aboutUs": "About Us",
+    "support": "Support",
+    "customerService": "Customer Service",
+    "shippingInfo": "Shipping Info",
+    "copyright": "All rights reserved."
+  },
+  "button": {
+    "add": "Add",
+    "edit": "Edit",
+    "browseFiles": "Browse Files",
+    "create": "Create",
+    "update": "Update",
+    "delete": "Delete",
+    "view": "View",
+    "save": "Save",
+    "confirm": "Confirm",
+    "submit": "Submit",
+    "complete": "Complete",
+    "upload": "Upload",
+    "close": "Close",
+    "new": "New",
+    "csvDownload": "CSV Download",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "invite": "Invite",
+    "download": "Download",
+    "reupload": "Reupload",
+    "downloadAll": "Download All"
   }
 }

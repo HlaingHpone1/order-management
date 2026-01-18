@@ -3,10 +3,10 @@ import { immer } from "zustand/middleware/immer";
 
 interface ModalStore {
   open: boolean;
-  selectedId: number | null;
+  selectedId: string | null;
   name: string | null;
   setOpen: (open: boolean) => void;
-  setSelectedId: (selectedId: number | null) => void;
+  setSelectedId: (selectedId: string | null) => void;
   setName: (name: string | null) => void;
 }
 
@@ -17,6 +17,6 @@ export const useDeleteModalStore = create<ModalStore>()(
     name: null,
     setName: (name: string | null) => set({ name }),
     setOpen: (open: boolean) => set({ open }),
-    setSelectedId: (selectedId: number | null) => set({ selectedId }),
+    setSelectedId: (selectedId: string | null) => set({ selectedId }),
   })),
 );

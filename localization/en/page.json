@@ -1,1 +1,106 @@
-{}
+{
+  "home": {
+    "heroTitleMain": "Discover Your Signature",
+    "heroTitleHighlight": "Fragrance",
+    "heroSubtitle": "Explore our curated collection of luxury perfumes from world-renowned brands. Find the perfect scent that defines you.",
+    "features": {
+      "premiumTitle": "Premium Quality",
+      "premiumDescription": "Authentic fragrances from trusted brands worldwide",
+      "secureTitle": "Secure Shopping",
+      "secureDescription": "Your data and payments are always protected",
+      "deliveryTitle": "Fast Delivery",
+      "deliveryDescription": "Quick and reliable shipping to your doorstep",
+      "careTitle": "Customer Care",
+      "careDescription": "Dedicated support for all your fragrance needs"
+    },
+    "featuredTitle": "Featured Fragrances",
+    "featuredSubtitle": "Discover our handpicked selection of premium perfumes",
+    "ctaTitle": "Ready to Find Your Signature Scent?",
+    "ctaSubtitle": "Browse our complete collection and discover the perfect fragrance for you"
+  },
+  "products": {
+    "title": "Our Fragrance Collection",
+    "subtitle": "Discover premium perfumes from world-renowned brands",
+    "filterAll": "All",
+    "emptyTitle": "No products found",
+    "emptyDescription": "Try adjusting your filters or search terms"
+  },
+  "about": {
+    "title": "About FragranceHub",
+    "subtitle": "Your trusted destination for luxury fragrances and premium perfumes",
+    "storyTitle": "Our Story",
+    "storyParagraph1": "FragranceHub was born from a passion for luxury fragrances and the belief that everyone deserves to find their signature scent. Founded in 2024, we set out to create a curated collection of the world's finest perfumes, making premium fragrances accessible to fragrance enthusiasts everywhere.",
+    "storyParagraph2": "We carefully select each product in our collection, working directly with renowned brands to ensure authenticity and quality. Our team of fragrance experts tests and reviews every scent to provide you with detailed information and honest recommendations.",
+    "storyParagraph3": "At FragranceHub, we understand that a fragrance is more than just a scent—it is a form of self-expression, a memory maker, and a way to leave a lasting impression. That is why we are committed to helping you discover the perfect fragrance that truly represents you.",
+    "valuesTitle": "Our Values",
+    "values": {
+      "qualityTitle": "Quality First",
+      "qualityDescription": "We only offer authentic, high-quality fragrances from trusted brands. Every product is carefully verified for authenticity.",
+      "careTitle": "Customer Care",
+      "careDescription": "Your satisfaction is our priority. We provide exceptional customer service and support throughout your shopping journey.",
+      "expertTitle": "Expert Guidance",
+      "expertDescription": "Our team of fragrance experts is here to help you find the perfect scent. We provide detailed information and personalized recommendations.",
+      "globalTitle": "Global Reach",
+      "globalDescription": "We bring you fragrances from around the world, featuring both established luxury brands and emerging perfumers."
+    },
+    "missionTitle": "Our Mission",
+    "missionText": "To make luxury fragrances accessible to everyone while maintaining the highest standards of quality, authenticity, and customer service. We believe that finding your signature scent should be an enjoyable and personalized experience, and we are here to guide you every step of the way.",
+    "ctaTitle": "Ready to Find Your Signature Scent?",
+    "ctaSubtitle": "Explore our curated collection of luxury fragrances"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Have a question or need assistance? We are here to help!",
+    "contactInfoTitle": "Contact Information",
+    "contactInfoDescription": "Reach out to us through any of the following channels. We typically respond within 24 hours.",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "addressLabel": "Address",
+    "businessHoursTitle": "Business Hours",
+    "businessHoursWeekdays": "Monday - Friday: 9:00 AM - 6:00 PM",
+    "businessHoursSaturday": "Saturday: 10:00 AM - 4:00 PM",
+    "businessHoursSunday": "Sunday: Closed",
+    "formTitle": "Send us a Message",
+    "formNameLabel": "Name",
+    "formEmailLabel": "Email",
+    "formSubjectLabel": "Subject",
+    "formMessageLabel": "Message",
+    "formNamePlaceholder": "Your name",
+    "formEmailPlaceholder": "your.email@example.com",
+    "formSubjectPlaceholder": "What is this regarding?",
+    "formMessagePlaceholder": "Tell us how we can help...",
+    "formSubmitting": "Sending...",
+    "formSubmit": "Send Message",
+    "successMessage": "Thank you for your message! We'll get back to you soon.",
+    "faqTitle": "Frequently Asked Questions",
+    "faq": {
+      "trackOrderQuestion": "How do I track my order?",
+      "trackOrderAnswer": "Once your order ships, you'll receive a tracking number via email. You can use this number to track your package on our website or the carrier's website.",
+      "returnPolicyQuestion": "What is your return policy?",
+      "returnPolicyAnswer": "We accept returns within 30 days of purchase for unopened, unused products in their original packaging. Due to hygiene standards, opened bottles cannot be returned.",
+      "authenticityQuestion": "Are your products authentic?",
+      "authenticityAnswer": "Yes, all our products are 100% authentic. We work directly with authorized distributors and brands to ensure authenticity.",
+      "internationalShippingQuestion": "Do you ship internationally?",
+      "internationalShippingAnswer": "Currently, we ship within the United States. International shipping options are coming soon. Please contact us for more information."
+    }
+  },
+  "auth": {
+    "loginTitle": "Log in to your account",
+    "loginSubtitle": "Enter your credentials to access your account",
+    "loginButton": "Log In",
+    "loginSuccess": "Successfully signed in!",
+    "loginError": "Failed to Log in. Please try again.",
+    "loggingIn": "Signing in...",
+    "registerTitle": "Create your account",
+    "registerSubtitle": "register to start shopping for luxury fragrances",
+    "registerButton": "Register",
+    "registerSuccess": "Account created successfully!",
+    "registerError": "Failed to create account. Please try again.",
+    "registering": "Creating account...",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "registerLink": "Register",
+    "loginLink": "Log in"
+  }
+}

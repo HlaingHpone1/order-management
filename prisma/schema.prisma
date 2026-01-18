@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -13,7 +7,10 @@ datasource db {
   provider = "postgresql"
 }
 
-// Enums
+// =======================
+// ENUMS
+// =======================
+
 enum OrderStatus {
   Placed
   Paid
@@ -38,32 +35,48 @@ enum PaymentStatus {
   Refunded
 }
 
+enum UserRole {
+  CUSTOMER
+  ADMIN
+  MANAGER
+}
+
 enum AttachmentRecordType {
   Product
   Brand
   Return
+  InventoryBatch 
+  ProductVariant
 }
 
+// =======================
+// AUTHENTICATION (Required for User ID in Orders)
+// =======================
+
 model User {
-  id            String    @id
+  id            String    @id @default(uuid())
   name          String
-  email         String
+  email         String    @unique
   emailVerified Boolean   @default(false)
   image         String?
+  role          UserRole  @default(CUSTOMER)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  
+  // Relations
+  orders        Order[]
   sessions      Session[]
   accounts      Account[]
-  orders        Order[]
 
-  @@unique([email])
   @@map("user")
 }
 
+// Kept Session/Account/Verification for Auth.js / NextAuth compatibility
 model Session {
   id        String   @id
   expiresAt DateTime
-  token     String
+  token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ipAddress String?
@@ -71,7 +84,6 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
   @@index([userId])
   @@map("session")
 }
@@ -91,7 +103,6 @@ model Account {
   password              String?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
-
   @@index([userId])
   @@map("account")
 }
@@ -103,12 +114,13 @@ model Verification {
   expiresAt  DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-
   @@index([identifier])
   @@map("verification")
 }
 
-// Order Management Models
+// =======================
+// CATALOG MANAGEMENT
+// =======================
 
 model Brand {
   id        String    @id @default(uuid())
@@ -116,6 +128,7 @@ model Brand {
   country   String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  
   products  Product[]
 
   @@map("brand")
@@ -124,15 +137,16 @@ model Brand {
 model Category {
   id               String     @id @default(uuid())
   name             String
-  slug             String
+  slug             String     @unique
   parentCategoryId String?
+  
   parentCategory   Category?  @relation("CategoryHierarchy", fields: [parentCategoryId], references: [id], onDelete: SetNull)
   subCategories    Category[] @relation("CategoryHierarchy")
   products         Product[]
+  
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
 
-  @@unique([slug])
   @@index([parentCategoryId])
   @@map("category")
 }
@@ -141,14 +155,19 @@ model Product {
   id           String           @id @default(uuid())
   name         String
   description  String?
+  
   categoryId   String
   category     Category         @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  
   brandId      String
   brand        Brand            @relation(fields: [brandId], references: [id], onDelete: Restrict)
+  
   scentFamily  String?
   genderTarget String?
+  
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
+  
   variants     ProductVariant[]
 
   @@index([categoryId])
@@ -158,56 +177,123 @@ model Product {
 
 model ProductVariant {
   id             String        @id @default(uuid())
-  sku            String
+  sku            String        @unique
   name           String
   concentration  Concentration
   volumeMl       Int
   isTester       Boolean       @default(false)
   weightGrams    Float?
-  stockLevel     Int           @default(0)
+  price          Float         // Selling Price
+  
+  // Inventory Summary
+  stockLevel     Int           @default(0) // Cached total of Batches
   reorderPoint   Int           @default(0)
+  
   productId      String
   product        Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
-  price          Float
-  specifications Json? // JSONB for Scent Notes (Top, Middle, Base)
+  
+  specifications Json?         // JSONB for Scent Notes (Top, Middle, Base)
+  
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
+  
   orderItems     OrderItem[]
+  batches        InventoryBatch[] // Relation to the new Batch model
 
-  @@unique([sku])
   @@index([productId])
   @@map("product_variant")
 }
 
+// =======================
+// INVENTORY MANAGEMENT (NEW)
+// =======================
+
+model InventoryBatch {
+  id             String         @id @default(uuid())
+  
+  variantId      String
+  variant        ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  
+  batchCode      String         // e.g., "BATCH-001-2026"
+  quantityOnHand Int
+  costPrice      Float          // Cost per unit for this specific batch
+  
+  receivedAt     DateTime       @default(now())
+  expiryDate     DateTime?      
+  
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([variantId])
+  @@index([expiryDate])
+  @@map("inventory_batch")
+}
+
+// =======================
+// ORDER MANAGEMENT
+// =======================
+
 model Order {
   id             String      @id @default(uuid())
-  orderCode      String // e.g., PERF-2026-8859
+  orderCode      String      @unique // e.g., PERF-2026-8859
+  
   userId         String
   user           User        @relation(fields: [userId], references: [id], onDelete: Restrict)
+  
   totalAmount    Float
   status         OrderStatus @default(Placed)
   trackingNumber String?
   shippedAt      DateTime?
+  
+  shippingAddress ShippingAddress?
+
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
+  
   items          OrderItem[]
   payments       Payment[]
 
-  @@unique([orderCode])
   @@index([userId])
   @@index([status])
   @@index([createdAt])
   @@map("order")
 }
 
+model ShippingAddress {
+  id            String   @id @default(uuid())
+  
+  // Link to Order (1:1 relation ensures this address belongs to a specific historical order)
+  orderId       String   @unique
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  // Address Details
+  recipientName String
+  phone         String
+  addressLine1  String
+  addressLine2  String?
+  city          String
+  state         String
+  postalCode    String
+  country       String
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("shipping_address")
+}
+
 model OrderItem {
   id        String         @id @default(uuid())
+  
   orderId   String
   order     Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
   variantId String
   variant   ProductVariant @relation(fields: [variantId], references: [id], onDelete: Restrict)
+  
   quantity  Int
   unitPrice Float
+  
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
 
@@ -218,20 +304,26 @@ model OrderItem {
 
 model Payment {
   id            String        @id @default(uuid())
+  
   orderId       String
   order         Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  transactionId String
+  
+  transactionId String        @unique
   gateway       String
   amount        Float
   status        PaymentStatus @default(Pending)
+  
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
-  @@unique([transactionId])
   @@index([orderId])
   @@index([status])
   @@map("payment")
 }
+
+// =======================
+// UTILITIES
+// =======================
 
 model Attachment {
   id         String               @id @default(uuid())
@@ -239,22 +331,27 @@ model Attachment {
   fileType   String
   fileSizeKb Float?
   purpose    String?
+  
+  // Polymorphic-style reference
   recordType AttachmentRecordType
   recordId   String
+  
   createdAt  DateTime             @default(now())
   updatedAt  DateTime             @updatedAt
 
-  @@index([recordType, recordId]) // Composite index for polymorphic relationship
+  @@index([recordType, recordId])
   @@map("attachment")
 }
 
 model AuditLog {
   id         String   @id @default(uuid())
+  
   entityType String
   entityId   String
   action     String
   changedBy  String?
   timestamp  DateTime @default(now())
+  
   metadata   Json? // Additional context as JSON
 
   @@index([entityType, entityId])

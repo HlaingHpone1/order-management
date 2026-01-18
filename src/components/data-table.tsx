@@ -70,7 +70,7 @@ export function DataTable<TData, TValue>({
           )}
           className={cn(isLoading && "h-full")}
         >
-          <TableHeader className="bg-primary sticky top-0">
+          <TableHeader className="bg-primary sticky top-0 z-10">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow className="hover:bg-primary" key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
